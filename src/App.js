@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
+import { ClientContextProvider } from 'react-fetching-library';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
-} from "react-router-dom";
+} from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import Users from "./Users";
+import client from './api/client';
+import Users from './users';
 
 function App() {
   useEffect(() => {
@@ -14,7 +16,7 @@ function App() {
   });
 
   return (
-    <React.Fragment>
+    <ClientContextProvider client={client}>
       <Router>
         <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
           <Navbar.Brand href="/">Bunny Studio</Navbar.Brand>
@@ -40,7 +42,7 @@ function App() {
         </Switch>
         </Container>
       </Router>
-    </React.Fragment>
+    </ClientContextProvider>
   );
 }
 
