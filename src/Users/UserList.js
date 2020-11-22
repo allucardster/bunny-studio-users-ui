@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
+import {
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from 'react-router-dom';
 import { useQuery } from 'react-fetching-library';
 import { userListAction } from '../api/actions/user';
 import { Spinner, Table, Button } from 'react-bootstrap';
+import CreateUser from "./CreateUser";
 
 function UserList() {
+  let { path, url } = useRouteMatch();
   const [state, setState] = useState({
     page: 1,
     per_page: 25,
@@ -38,7 +46,7 @@ function UserList() {
           <h1>Users</h1>
         </div>
         <div class="align-self-center p-2 bd-highlight">
-          <Button variant="secondary" className="align-middle">Add User</Button>
+          <Link className="btn btn-secondary" to={`${url}/add`}>Create User</Link>
         </div>
       </div>
       <Table striped bordered hover responsive>
@@ -63,6 +71,11 @@ function UserList() {
           })}
         </tbody>
       </Table>
+      <Switch>
+        <Route path={`${path}/add`}>
+          <CreateUser />
+        </Route>
+      </Switch>
     </React.Fragment>
   );
 }
