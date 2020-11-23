@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import { useQuery } from 'react-fetching-library';
 import { userListAction } from '../api/actions/user';
-import { Spinner, Table, Button } from 'react-bootstrap';
+import { Spinner, Table } from 'react-bootstrap';
 import CreateUser from './CreateUser';
 import UpdateUser from './UpdateUser';
 import DeleteUser from "./DeleteUser";
 
 function UserList() {
-  let { path, url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const [state, setState] = useState({
     page: 1,
     per_page: 25,
@@ -33,7 +33,9 @@ function UserList() {
 
   if (loading) {
     return (
-      <Spinner animation="border" />
+      <div className="text-center">
+        <Spinner animation="border" />
+      </div>
     );
   }
 
@@ -91,7 +93,7 @@ function UserList() {
               <tr key={user.id}>
                 <td>{user.name}</td>
                 <td>
-                  <Button variant="secondary">User tasks</Button>{' '}
+                  <Link className="btn btn-secondary" to={`${url}/${user.id}/user-tasks`}>Tasks</Link>{' '}
                   <Link className="btn btn-warning" to={`${url}/${user.id}/update`}>Update</Link>{' '}
                   <Link className="btn btn-danger" to={`${url}/${user.id}/delete`}>Delete</Link>{' '}
                 </td>

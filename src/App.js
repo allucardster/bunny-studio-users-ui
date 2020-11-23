@@ -4,11 +4,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  Link
 } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import client from './api/client';
 import Users from './users';
+import UserTasks from "./userTasks";
 
 function App() {
   useEffect(() => {
@@ -23,12 +25,15 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/users">Users</Nav.Link>
+              <Link to="/" className="nav-link">Users</Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
         <Container fluid>
         <Switch>
+          <Route path="/users/:userId/user-tasks">
+            <UserTasks />
+          </Route>
           <Route path="/users">
             <Users />
           </Route>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import UserList from './UserList';
 
-export default function Users() {
+function Users() {
   return (
     <React.Fragment>
       <Route>
@@ -11,3 +11,5 @@ export default function Users() {
     </React.Fragment>
   );
 };
+
+export default Users;
