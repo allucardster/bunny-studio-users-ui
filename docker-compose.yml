@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  react-frontend:
+    container_name: react-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '${NGINX_PORT}:80'
+    environment:
+      - NODE_ENV=development
