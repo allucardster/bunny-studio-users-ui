@@ -25,6 +25,11 @@ $ docker-compose up -d
 
 - Open http://localhost:3000 in a web browser (Chrome, Firefox, etc)
 
+Live Demo
+=========
+
+- http://167.99.6.21
+
 Contributors
 ============
 
