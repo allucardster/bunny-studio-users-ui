@@ -8,7 +8,8 @@ import {
 import { useQuery } from 'react-fetching-library';
 import { userListAction } from '../api/actions/user';
 import { Spinner, Table, Button } from 'react-bootstrap';
-import CreateUser from "./CreateUser";
+import CreateUser from './CreateUser';
+import UpdateUser from './UpdateUser';
 
 function UserList() {
   let { path, url } = useRouteMatch();
@@ -47,6 +48,20 @@ function UserList() {
     setState({...state, results});
   }
 
+  const editUser = (user) => {
+    const { results } = state;
+    const idx = results.findIndex(current => current.id === user.id);
+
+    if (idx < 0) {
+      return;
+    }
+
+    results[idx] = {...results[idx], ...user};
+    console.log(idx, results[idx]);
+
+    setState({...state, results});
+  }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between bd-highlight mb-12">
@@ -71,8 +86,8 @@ function UserList() {
                 <td>{user.name}</td>
                 <td>
                   <Button variant="secondary">User tasks</Button>{' '}
-                  <Button variant="warning">Edit</Button>{' '}
-                  <Button variant="danger">Success</Button>{' '}
+                  <Link className="btn btn-warning" to={`${url}/${user.id}/update`}>Update</Link>{' '}
+                  <Button variant="danger">Delete</Button>{' '}
                 </td>
               </tr>
             );
@@ -82,6 +97,9 @@ function UserList() {
       <Switch>
         <Route path={`${path}/add`}>
           <CreateUser callback={addUser}/>
+        </Route>
+        <Route path={`${path}/:userId`}>
+          <UpdateUser callback={editUser}></UpdateUser>
         </Route>
       </Switch>
     </React.Fragment>
