@@ -19,3 +19,8 @@ export const updateUserAction = (id, body) => ({
   endpoint: `/api/user/${id}`,
   body
 });
+
+export const deleteUserAction = (id) => ({
+  method: 'DELETE',
+  endpoint: `/api/user/${id}`
+});

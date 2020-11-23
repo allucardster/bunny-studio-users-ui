@@ -10,6 +10,7 @@ import { userListAction } from '../api/actions/user';
 import { Spinner, Table, Button } from 'react-bootstrap';
 import CreateUser from './CreateUser';
 import UpdateUser from './UpdateUser';
+import DeleteUser from "./DeleteUser";
 
 function UserList() {
   let { path, url } = useRouteMatch();
@@ -57,7 +58,12 @@ function UserList() {
     }
 
     results[idx] = {...results[idx], ...user};
-    console.log(idx, results[idx]);
+
+    setState({...state, results});
+  }
+
+  const removeUser = (id) => {
+    const results = state.results.filter(current => current.id !== id);
 
     setState({...state, results});
   }
@@ -87,7 +93,7 @@ function UserList() {
                 <td>
                   <Button variant="secondary">User tasks</Button>{' '}
                   <Link className="btn btn-warning" to={`${url}/${user.id}/update`}>Update</Link>{' '}
-                  <Button variant="danger">Delete</Button>{' '}
+                  <Link className="btn btn-danger" to={`${url}/${user.id}/delete`}>Delete</Link>{' '}
                 </td>
               </tr>
             );
@@ -98,8 +104,11 @@ function UserList() {
         <Route path={`${path}/add`}>
           <CreateUser callback={addUser}/>
         </Route>
-        <Route path={`${path}/:userId`}>
+        <Route path={`${path}/:userId/update`}>
           <UpdateUser callback={editUser}></UpdateUser>
+        </Route>
+        <Route path={`${path}/:userId/delete`}>
+          <DeleteUser callback={removeUser}></DeleteUser>
         </Route>
       </Switch>
     </React.Fragment>
