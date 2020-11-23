@@ -8,6 +8,7 @@ import {
   Link,
   useRouteMatch
 } from 'react-router-dom';
+import CreateUserTask from './CreateUserTask';
 
 function UserTaskList(props) {
   const { path, url } = useRouteMatch();
@@ -39,6 +40,14 @@ function UserTaskList(props) {
 
   if (error) {
     console.log('Unable to load users tasks');
+  }
+
+  const addUserTask = (userTask) => {
+    const { results } = state;
+
+    results.push(userTask);
+
+    setState({...state, results});
   }
 
   return (
@@ -74,6 +83,11 @@ function UserTaskList(props) {
           })}
         </tbody>
       </Table>
+      <Switch>
+        <Route path={`${path}/add`}>
+          <CreateUserTask callback={addUserTask}/>
+        </Route>
+      </Switch>
     </React.Fragment>
   );
 }
