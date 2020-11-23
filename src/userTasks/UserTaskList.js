@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import CreateUserTask from './CreateUserTask';
 import UpdateUserTask from './UpdateUserTask';
+import DeleteUserTask from './DeleteUserTask';
 
 function UserTaskList(props) {
   const { path, url } = useRouteMatch();
@@ -64,6 +65,12 @@ function UserTaskList(props) {
     setState({...state, results});
   }
 
+  const removeUserTask = (id) => {
+    const results = state.results.filter(current => current.id !== id);
+
+    setState({...state, results});
+  }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between bd-highlight mb-12">
@@ -103,6 +110,9 @@ function UserTaskList(props) {
         </Route>
         <Route path={`${path}/:userTaskId/update`}>
           <UpdateUserTask callback={editUserTask}/>
+        </Route>
+        <Route path={`${path}/:userTaskId/delete`}>
+          <DeleteUserTask callback={removeUserTask}/>
         </Route>
       </Switch>
     </React.Fragment>
