@@ -9,6 +9,7 @@ import {
   useRouteMatch
 } from 'react-router-dom';
 import CreateUserTask from './CreateUserTask';
+import UpdateUserTask from './UpdateUserTask';
 
 function UserTaskList(props) {
   const { path, url } = useRouteMatch();
@@ -50,6 +51,19 @@ function UserTaskList(props) {
     setState({...state, results});
   }
 
+  const editUserTask = (userTask) => {
+    const { results } = state;
+    const idx = results.findIndex(current => current.id === userTask.id);
+
+    if (idx < 0) {
+      return;
+    }
+
+    results[idx] = {...results[idx], ...userTask};
+
+    setState({...state, results});
+  }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between bd-highlight mb-12">
@@ -75,8 +89,8 @@ function UserTaskList(props) {
                 <td>{userTask.description}</td>
                 <td>{userTask.state}</td>
                 <td>
-                  <Link className="btn btn-warning" to={`${url}/users/${userTask.user.id}/user-tasks/${userTask.id}/update`}>Update</Link>{' '}
-                  <Link className="btn btn-danger" to={`${url}/users/${userTask.user.id}/user-tasks/${userTask.id}/delete`}>Delete</Link>{' '}
+                  <Link className="btn btn-warning" to={`${url}/${userTask.id}/update`}>Update</Link>{' '}
+                  <Link className="btn btn-danger" to={`${url}/${userTask.id}/delete`}>Delete</Link>{' '}
                 </td>
               </tr>
             );
@@ -86,6 +100,9 @@ function UserTaskList(props) {
       <Switch>
         <Route path={`${path}/add`}>
           <CreateUserTask callback={addUserTask}/>
+        </Route>
+        <Route path={`${path}/:userTaskId/update`}>
+          <UpdateUserTask callback={editUserTask}/>
         </Route>
       </Switch>
     </React.Fragment>
