@@ -39,13 +39,21 @@ function UserList() {
     console.log('Unable to load users');
   }
 
+  const addUser = (user) => {
+    const { results } = state;
+
+    results.push(user);
+
+    setState({...state, results});
+  }
+
   return (
     <React.Fragment>
-      <div class="d-flex justify-content-between bd-highlight mb-12">
-        <div class="p-2 bd-highlight">
+      <div className="d-flex justify-content-between bd-highlight mb-12">
+        <div className="p-2 bd-highlight">
           <h1>Users</h1>
         </div>
-        <div class="align-self-center p-2 bd-highlight">
+        <div className="align-self-center p-2 bd-highlight">
           <Link className="btn btn-secondary" to={`${url}/add`}>Create User</Link>
         </div>
       </div>
@@ -62,9 +70,9 @@ function UserList() {
               <tr key={user.id}>
                 <td>{user.name}</td>
                 <td>
-                  <Button variant="secondary">User tasks</Button>
-                  <Button variant="warning">Edit</Button>
-                  <Button variant="danger">Success</Button>
+                  <Button variant="secondary">User tasks</Button>{' '}
+                  <Button variant="warning">Edit</Button>{' '}
+                  <Button variant="danger">Success</Button>{' '}
                 </td>
               </tr>
             );
@@ -73,7 +81,7 @@ function UserList() {
       </Table>
       <Switch>
         <Route path={`${path}/add`}>
-          <CreateUser />
+          <CreateUser callback={addUser}/>
         </Route>
       </Switch>
     </React.Fragment>
